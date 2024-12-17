@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WpfApp4_Variant_1.Properties;
 
+
 namespace WpfApp4_Variant_1
 {
     /// <summary>
@@ -24,8 +25,8 @@ namespace WpfApp4_Variant_1
         public MainWindow()
         {
             InitializeComponent();
-            //MainFrame.Navigate(new ToursPage());
-            //Manager.MainFrame = MainFrame;
+            MainFrame.Navigate(new MaterialPage());
+            Manager.MainFrame = MainFrame;
             //ImportTours();
             Border.Visibility = Visibility.Hidden;
 
@@ -65,8 +66,8 @@ namespace WpfApp4_Variant_1
         {
 
             MouseMoveOpt();
-            //Window newWindow = new Autorized();
-            //newWindow.Show();
+            // Window newWindow = new Autorized();
+            // newWindow.Show();
 
         }
 
@@ -79,8 +80,8 @@ namespace WpfApp4_Variant_1
 
         private void Account_click(object sender, MouseButtonEventArgs e)
         {
-           // Window newWindow = new Autorized();
-           // newWindow.Show();
+           Window newWindow = new Autorized();
+           newWindow.Show();
         }
 
         private void MouseButtonAccEnter(object sender, MouseEventArgs e)
@@ -124,8 +125,8 @@ namespace WpfApp4_Variant_1
 
         private void Setting_click(object sender, MouseButtonEventArgs e)
         {
-            //Window newWindow = new Setting();
-            //newWindow.Show();
+            Window newWindow = new Setting();
+            newWindow.Show();
         }
 
         private void Exit_Click(object sender, MouseButtonEventArgs e)
@@ -142,6 +143,36 @@ namespace WpfApp4_Variant_1
         {
            // Window newWindows = new OOO();
             //newWindows.Show();
+        }
+
+        private void VxodEnter(object sender, MouseEventArgs e)
+        {
+            TextVxod.Background = Brushes.DarkGreen;
+        }
+
+        private void LeaveVxod(object sender, MouseEventArgs e)
+        {
+            TextVxod.Background = null;
+        }
+
+        private void SetEnter(object sender, MouseEventArgs e)
+        {
+            TextSet.Background = Brushes.DarkGreen;
+        }
+
+        private void SetLeave(object sender, MouseEventArgs e)
+        {
+            TextSet.Background = null;
+        }
+
+        private void OutEnter(object sender, MouseEventArgs e)
+        {
+            TextOut.Background = Brushes.DarkGreen;
+        }
+
+        private void OutLeave(object sender, MouseEventArgs e)
+        {
+            TextOut.Background = null;
         }
     }
 }

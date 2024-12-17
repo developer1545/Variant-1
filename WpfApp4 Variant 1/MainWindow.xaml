@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp4_Variant_1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="" Height="450" Width="800" WindowStyle="ThreeDBorderWindow">
     <Grid>
         <Grid MouseDown="MouseDownGrid">
             <Grid.RowDefinitions>
@@ -14,11 +14,6 @@
                 <RowDefinition Height="30" />
             </Grid.RowDefinitions>
             <Grid Background="#FF45813B" />
-            <Image HorizontalAlignment="Left" Height="69" Margin="10,0,0,0" VerticalAlignment="Center" Width="73"  Cursor="" MouseDown="MouseImageDown">
-                <Image.Clip>
-                    <EllipseGeometry RadiusX="31" RadiusY="33" Center="37,34"/>
-                </Image.Clip>
-            </Image>
             <TextBlock Text="Завод «ПрогрессПолимер»" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" Foreground="Black" MouseDown="MouseTextDown" FontFamily="Bahnschrift SemiBold" />
             <Grid Grid.Row="2" Background="#FF45813B" />
             <Frame  NavigationUIVisibility="Hidden" Grid.Row="1" Name="MainFrame" Navigated="MainFrame_Navigated"></Frame>
@@ -34,9 +29,9 @@
                     </TransformGroup>
                 </Border.RenderTransform>
                 <StackPanel Margin="-1,51,-1,-2" >
-                    <TextBlock Text="Войти" Foreground="Black" MouseDown="Account_click" Background="#FF45813B" FontSize="20" Width="175" HorizontalAlignment="Left"/>
-                    <TextBlock Text="Настроить" Foreground="Black" MouseDown="Setting_click" Background="#FF45813B" FontSize="20" Height="28" />
-                    <TextBlock Text="Выйти" FontSize="20" MouseDown="Exit_Click"  Foreground="Black" Background="#FF45813B" Height="25" />
+                    <TextBlock Name="TextVxod" Text="Войти" Foreground="Black" MouseDown="Account_click" Background="#FF45813B" FontSize="20" Width="175" HorizontalAlignment="Left" MouseEnter="VxodEnter" MouseLeave="LeaveVxod"/>
+                    <TextBlock Name="TextSet" Text="Настроить" Foreground="Black" MouseDown="Setting_click" Background="#FF45813B" FontSize="20" Height="28" MouseEnter="SetEnter" MouseLeave="SetLeave" />
+                    <TextBlock Name="TextOut" Text="Выйти" FontSize="20" MouseDown="Exit_Click"  Foreground="Black" Background="#FF45813B" Height="25" MouseEnter="OutEnter" MouseLeave="OutLeave" />
                 </StackPanel>
 
             </Border>
@@ -82,7 +77,7 @@
                 </StackPanel>
             </Border>
 
-
+            <Image Source="/Логотип.jpg" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,10,0,10" StretchDirection="DownOnly" />
 
 
         </Grid>
