@@ -39,7 +39,7 @@
             <PropertyRef Name="ID_Агента" />
             <PropertyRef Name="ID_Менеджера" />
           </Key>
-          <Property Name="ID_Заявки" Type="int" Nullable="false" />
+          <Property Name="ID_Заявки" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ID_Агента" Type="int" Nullable="false" />
           <Property Name="ID_Менеджера" Type="int" Nullable="false" />
           <Property Name="Дата_создания_заявки" Type="nvarchar" MaxLength="50" />
@@ -47,29 +47,35 @@
           <Property Name="Список_продукции" Type="nvarchar" MaxLength="50" />
           <Property Name="Время_производства" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6013: Первичный ключ в таблице или представлении "Variant 1 YP.dbo.Импорт" не определен, его не удалось вывести. Эта таблица или представление исключены. Чтобы использовать сущность, необходимо проверить схему, добавить правильные ключи и раскомментировать ее.
+        <EntityType Name="Импорт">
+          <Property Name="Наименование_материала" Type="nvarchar" MaxLength="50" />
+          <Property Name="Возможный_поставщик" Type="nvarchar" MaxLength="50" />
+          <Property Name="ID_поставщика" Type="int" />
+        </EntityType>-->
         <EntityType Name="Материал">
           <Key>
             <PropertyRef Name="ID_Материала" />
           </Key>
           <Property Name="ID_Материала" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ID_Поставщика" Type="int" Nullable="false" />
-          <Property Name="Наименование" Type="nvarchar" MaxLength="50" />
-          <Property Name="Тип_материала" Type="nvarchar" MaxLength="50" />
-          <Property Name="Возможные_поставщики" Type="nvarchar" MaxLength="50" />
+          <Property Name="Наименование" Type="nvarchar(max)" />
+          <Property Name="Тип_материала" Type="nvarchar(max)" />
+          <Property Name="Возможные_поставщики" Type="nvarchar(max)" />
           <Property Name="Количество_в_упаковке" Type="int" />
-          <Property Name="Единица_измерения" Type="int" />
+          <Property Name="Единица_измерения" Type="nvarchar(max)" />
           <Property Name="Количество_на_складе" Type="int" />
           <Property Name="Минимальное_допустимое_количество" Type="int" />
-          <Property Name="Описание" Type="nvarchar" MaxLength="50" />
-          <Property Name="Изображение_материала" Type="image" />
-          <Property Name="Стоимость_сырья" Type="money" />
-          <Property Name="История_изменениний" Type="nvarchar" MaxLength="50" />
+          <Property Name="Описание" Type="nvarchar(max)" />
+          <Property Name="Изображение_материала" Type="varbinary" MaxLength="255" />
+          <Property Name="Стоимость_сырья" Type="int" />
+          <Property Name="История_изменениний" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Менеджеры">
           <Key>
             <PropertyRef Name="ID_Менеджера" />
           </Key>
-          <Property Name="ID_Менеджера" Type="int" Nullable="false" />
+          <Property Name="ID_Менеджера" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ФИО" Type="nvarchar" MaxLength="100" />
           <Property Name="Телефон" Type="int" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" />
@@ -78,11 +84,12 @@
           <Key>
             <PropertyRef Name="ID_Поставщика" />
           </Key>
-          <Property Name="ID_Поставщика" Type="int" Nullable="false" />
+          <Property Name="ID_Поставщика" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Наименование" Type="nvarchar" MaxLength="50" />
-          <Property Name="ИНН" Type="int" />
           <Property Name="Тип_постащика" Type="nvarchar" MaxLength="50" />
-          <Property Name="История_поставок" Type="nvarchar(max)" />
+          <Property Name="ИНН" Type="bigint" />
+          <Property Name="Рейтинг_качества" Type="int" />
+          <Property Name="Дата_начала_работы_с_поставщиком" Type="date" />
         </EntityType>
         <EntityType Name="Продукция">
           <Key>
@@ -111,7 +118,7 @@
           <Key>
             <PropertyRef Name="ID_Сотрудника" />
           </Key>
-          <Property Name="ID_Сотрудника" Type="int" Nullable="false" />
+          <Property Name="ID_Сотрудника" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ФИО" Type="nvarchar" MaxLength="100" />
           <Property Name="Дата_рождения" Type="date" />
           <Property Name="Паспортные_данные" Type="nvarchar" MaxLength="50" />
@@ -140,18 +147,6 @@
             </Principal>
             <Dependent Role="Заявка">
               <PropertyRef Name="ID_Менеджера" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Материал_Поставщики">
-          <End Role="Поставщики" Type="Self.Поставщики" Multiplicity="1" />
-          <End Role="Материал" Type="Self.Материал" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Поставщики">
-              <PropertyRef Name="ID_Поставщика" />
-            </Principal>
-            <Dependent Role="Материал">
-              <PropertyRef Name="ID_Поставщика" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -195,10 +190,6 @@
           <AssociationSet Name="FK_Заявка_Менеджеры" Association="Self.FK_Заявка_Менеджеры">
             <End Role="Менеджеры" EntitySet="Менеджеры" />
             <End Role="Заявка" EntitySet="Заявка" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Материал_Поставщики" Association="Self.FK_Материал_Поставщики">
-            <End Role="Поставщики" EntitySet="Поставщики" />
-            <End Role="Материал" EntitySet="Материал" />
           </AssociationSet>
           <AssociationSet Name="FK_Продукция_Материал" Association="Self.FK_Продукция_Материал">
             <End Role="Материал" EntitySet="Материал" />
@@ -249,7 +240,7 @@
             <PropertyRef Name="ID_Агента" />
             <PropertyRef Name="ID_Менеджера" />
           </Key>
-          <Property Name="ID_Заявки" Type="Int32" Nullable="false" />
+          <Property Name="ID_Заявки" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ID_Агента" Type="Int32" Nullable="false" />
           <Property Name="ID_Менеджера" Type="Int32" Nullable="false" />
           <Property Name="Дата_создания_заявки" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -264,26 +255,24 @@
             <PropertyRef Name="ID_Материала" />
           </Key>
           <Property Name="ID_Материала" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ID_Поставщика" Type="Int32" Nullable="false" />
-          <Property Name="Наименование" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Тип_материала" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Возможные_поставщики" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Наименование" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Тип_материала" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Возможные_поставщики" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Количество_в_упаковке" Type="Int32" />
-          <Property Name="Единица_измерения" Type="Int32" />
+          <Property Name="Единица_измерения" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Количество_на_складе" Type="Int32" />
           <Property Name="Минимальное_допустимое_количество" Type="Int32" />
-          <Property Name="Описание" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Изображение_материала" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="Стоимость_сырья" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="История_изменениний" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Поставщики" Relationship="Self.FK_Материал_Поставщики" FromRole="Материал" ToRole="Поставщики" />
+          <Property Name="Описание" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Изображение_материала" Type="Binary" MaxLength="255" FixedLength="false" />
+          <Property Name="Стоимость_сырья" Type="Int32" />
+          <Property Name="История_изменениний" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Продукция" Relationship="Self.FK_Продукция_Материал" FromRole="Материал" ToRole="Продукция" />
         </EntityType>
         <EntityType Name="Менеджеры">
           <Key>
             <PropertyRef Name="ID_Менеджера" />
           </Key>
-          <Property Name="ID_Менеджера" Type="Int32" Nullable="false" />
+          <Property Name="ID_Менеджера" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ФИО" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Телефон" Type="Int32" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -293,12 +282,12 @@
           <Key>
             <PropertyRef Name="ID_Поставщика" />
           </Key>
-          <Property Name="ID_Поставщика" Type="Int32" Nullable="false" />
+          <Property Name="ID_Поставщика" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Наименование" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ИНН" Type="Int32" />
           <Property Name="Тип_постащика" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="История_поставок" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Материал" Relationship="Self.FK_Материал_Поставщики" FromRole="Поставщики" ToRole="Материал" />
+          <Property Name="ИНН" Type="Int64" />
+          <Property Name="Рейтинг_качества" Type="Int32" />
+          <Property Name="Дата_начала_работы_с_поставщиком" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="Продукция">
           <Key>
@@ -329,7 +318,7 @@
           <Key>
             <PropertyRef Name="ID_Сотрудника" />
           </Key>
-          <Property Name="ID_Сотрудника" Type="Int32" Nullable="false" />
+          <Property Name="ID_Сотрудника" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ФИО" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Дата_рождения" Type="DateTime" Precision="0" />
           <Property Name="Паспортные_данные" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -359,18 +348,6 @@
             </Principal>
             <Dependent Role="Заявка">
               <PropertyRef Name="ID_Менеджера" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Материал_Поставщики">
-          <End Role="Поставщики" Type="Self.Поставщики" Multiplicity="1" />
-          <End Role="Материал" Type="Self.Материал" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Поставщики">
-              <PropertyRef Name="ID_Поставщика" />
-            </Principal>
-            <Dependent Role="Материал">
-              <PropertyRef Name="ID_Поставщика" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -414,10 +391,6 @@
           <AssociationSet Name="FK_Заявка_Менеджеры" Association="Self.FK_Заявка_Менеджеры">
             <End Role="Менеджеры" EntitySet="Менеджеры" />
             <End Role="Заявка" EntitySet="Заявка" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Материал_Поставщики" Association="Self.FK_Материал_Поставщики">
-            <End Role="Поставщики" EntitySet="Поставщики" />
-            <End Role="Материал" EntitySet="Материал" />
           </AssociationSet>
           <AssociationSet Name="FK_Продукция_Материал" Association="Self.FK_Продукция_Материал">
             <End Role="Материал" EntitySet="Материал" />
@@ -481,7 +454,6 @@
             <EntityTypeMapping TypeName="Model.Материал">
               <MappingFragment StoreEntitySet="Материал">
                 <ScalarProperty Name="ID_Материала" ColumnName="ID_Материала" />
-                <ScalarProperty Name="ID_Поставщика" ColumnName="ID_Поставщика" />
                 <ScalarProperty Name="Наименование" ColumnName="Наименование" />
                 <ScalarProperty Name="Тип_материала" ColumnName="Тип_материала" />
                 <ScalarProperty Name="Возможные_поставщики" ColumnName="Возможные_поставщики" />
@@ -511,9 +483,10 @@
               <MappingFragment StoreEntitySet="Поставщики">
                 <ScalarProperty Name="ID_Поставщика" ColumnName="ID_Поставщика" />
                 <ScalarProperty Name="Наименование" ColumnName="Наименование" />
-                <ScalarProperty Name="ИНН" ColumnName="ИНН" />
                 <ScalarProperty Name="Тип_постащика" ColumnName="Тип_постащика" />
-                <ScalarProperty Name="История_поставок" ColumnName="История_поставок" />
+                <ScalarProperty Name="ИНН" ColumnName="ИНН" />
+                <ScalarProperty Name="Рейтинг_качества" ColumnName="Рейтинг_качества" />
+                <ScalarProperty Name="Дата_начала_работы_с_поставщиком" ColumnName="Дата_начала_работы_с_поставщиком" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

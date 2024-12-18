@@ -14,19 +14,11 @@ namespace WpfApp4_Variant_1
     
     public partial class Поставщики
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Поставщики()
-        {
-            this.Материал = new HashSet<Материал>();
-        }
-    
         public int ID_Поставщика { get; set; }
         public string Наименование { get; set; }
-        public Nullable<int> ИНН { get; set; }
         public string Тип_постащика { get; set; }
-        public string История_поставок { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Материал> Материал { get; set; }
+        public Nullable<long> ИНН { get; set; }
+        public Nullable<int> Рейтинг_качества { get; set; }
+        public Nullable<System.DateTime> Дата_начала_работы_с_поставщиком { get; set; }
     }
 }

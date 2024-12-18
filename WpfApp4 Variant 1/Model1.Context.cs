@@ -28,7 +28,6 @@ namespace WpfApp4_Variant_1
             }
             return _DContext;
         }
-
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
