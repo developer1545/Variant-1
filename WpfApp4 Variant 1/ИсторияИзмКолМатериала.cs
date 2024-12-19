@@ -12,17 +12,13 @@ namespace WpfApp4_Variant_1
     using System;
     using System.Collections.Generic;
     
-    public partial class Заявка
+    public partial class ИсторияИзмКолМатериала
     {
-        public int ID_Заявки { get; set; }
-        public int ID_Агента { get; set; }
-        public int ID_Менеджера { get; set; }
-        public string Дата_создания_заявки { get; set; }
-        public string Согласованность { get; set; }
-        public string Список_продукции { get; set; }
-        public string Время_производства { get; set; }
+        public int ID { get; set; }
+        public Nullable<System.DateTime> Дата { get; set; }
+        public Nullable<int> ID_Материала { get; set; }
+        public Nullable<int> Новое_Количество { get; set; }
     
-        public virtual Агенты Агенты { get; set; }
-        public virtual Менеджеры Менеджеры { get; set; }
+        public virtual Материал Материал { get; set; }
     }
 }

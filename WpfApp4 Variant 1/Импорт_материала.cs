@@ -12,20 +12,10 @@ namespace WpfApp4_Variant_1
     using System;
     using System.Collections.Generic;
     
-    public partial class Менеджеры
+    public partial class Импорт_материала
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Менеджеры()
-        {
-            this.Заявка = new HashSet<Заявка>();
-        }
-    
-        public int ID_Менеджера { get; set; }
-        public string ФИО { get; set; }
-        public Nullable<int> Телефон { get; set; }
-        public string Email { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Заявка> Заявка { get; set; }
+        public int ID_Импорта { get; set; }
+        public string Наименование_материала { get; set; }
+        public string Возможный_поставщик { get; set; }
     }
 }

@@ -15,8 +15,8 @@ namespace WpfApp4_Variant_1
     public partial class Поставщики
     {
         public int ID_Поставщика { get; set; }
-        public string Наименование { get; set; }
-        public string Тип_постащика { get; set; }
+        public string Наименование_поставщика { get; set; }
+        public string Тип_поставщика { get; set; }
         public Nullable<long> ИНН { get; set; }
         public Nullable<int> Рейтинг_качества { get; set; }
         public Nullable<System.DateTime> Дата_начала_работы_с_поставщиком { get; set; }

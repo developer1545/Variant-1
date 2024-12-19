@@ -113,27 +113,19 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>UsersEntities.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Агенты.cs">
+    <Compile Include="Импорт_материала.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Заявка.cs">
+    <Compile Include="ИсторияИзмКолМатериала.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Материал.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Менеджеры.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Поставщики.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Продукция.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Сотрудники.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Типы_материала.cs" />
     <Page Include="Autorized.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -34,6 +34,7 @@ namespace WpfApp4_Variant_1
             //ImportMaterial();
             Border.Visibility = Visibility.Hidden;
 
+
         }
         private void MouseExitOpt()
         {
@@ -178,122 +179,177 @@ namespace WpfApp4_Variant_1
         {
             TextOut.Background = null;
         }
-
-        public class ByteArrayToImageSourceConverter : IValueConverter
-        {
-            public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-            {
-                if (value is byte[] byteArray)
-                {
-                    using (var stream = new MemoryStream(byteArray))
-                    {
-                        var image = new BitmapImage();
-                        image.BeginInit();
-                        image.CacheOption = BitmapCacheOption.OnLoad;
-                        image.StreamSource = stream;
-                        image.EndInit();
-                        image.Freeze(); // Замораживание для использования в разных потоках
-                        return image;
-                    }
-                }
-                return null;
-            }
-
-            public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-            {
-                throw new NotImplementedException();
-            }
-        }        
         /*private void ImportMaterial()
         {
-            // Путь к папке с изображениями
-            var imagesDirectory = @"C:\Users\antom\OneDrive\Рабочий стол\2024-2025\УП.01.01\Variant 1";
-            var images = Directory.GetFiles(imagesDirectory);
+            var fileData = File.ReadAllLines(@"C:\Users\antom\OneDrive\Рабочий стол\2024-2025\УП.01.01\Variant 1\materials_k_import1.txt");
+            var images = Directory.GetFiles(@"C:\Users\antom\OneDrive\Рабочий стол\2024-2025\УП.01.01\Variant 1\materials");
 
-            // Получаем все материалы из базы данных
-            var materials = ModelEntities.GetContext().Материал.ToList();
-
-            foreach (var material in materials)
+            foreach (var line in fileData)
             {
-                // Проверяем, заполнено ли поле изображения
-                if (material.Изображение_материала == null) // или пустая строка, если используется строковый тип
-                {
-                    // Находим файл изображения для данного материала
-                    var imagePath = images.FirstOrDefault(img => img.Contains(material.Наименование));
-
-                    if (imagePath != null)
+                var data = line.Split('\t');
+           
+                    if (data.Length < 8) // Проверка на количество данных
                     {
-                        try
-                        {
-                            // Читаем файл изображения в байты
-                            material.Изображение_материала = File.ReadAllBytes(imagePath);
-
-                            // Сохраняем изменения в базе данных
-                            ModelEntities.GetContext().SaveChanges();
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"Ошибка при обработке материала {material.Наименование}: {ex.Message}");
-                        }
+                        Console.WriteLine($"Недостаточно данных в строке: {line}");
+                        continue;
                     }
-                    else
+
+                    /*if (!Int32.TryParse(data[0], out int supplierId))
                     {
-                        Console.WriteLine($"Изображение для материала {material.Наименование} не найдено.");
+                        Console.WriteLine($"Ошибка парсинга  Наименование_материала в строке: {line}");
+                        continue;
+                    }
+                    
+                    if (!Int32.TryParse(data[3], out int quantityInPack))
+                    {
+                        Console.WriteLine($"Ошибка парсинга Цена в строке: {line}");
+                        continue;
+                    }
+
+                    if (!Int32.TryParse(data[4], out int quantityInStock))
+                    {
+                        Console.WriteLine($"Ошибка парсинга Количество_на_складе в строке: {line}");
+                        continue;
+                    }
+
+                    if (!Int32.TryParse(data[5], out int minQuantity))
+                    {
+                        Console.WriteLine($"Ошибка парсинга  Минимальное_количество: {line}");
+                        continue;
+                    }
+
+                    if (!decimal.TryParse(data[6], out decimal rawMaterialCost))
+                    {
+                        Console.WriteLine($"Ошибка парсинга Количество_в_упаковке: {line}");
+                        continue;
+                    }
+
+                    var tempMaterial = new Материал
+                {
+                    Наименование_материала = data[0].Replace("\"",""),
+                    Тип_материала = Convert.ToString(data[1]),
+                    Цена = Int32.Parse(data[3]),
+                    Количество_на_складе = Int32.Parse(data[4]),
+                    Минимальное_количество = Int32.Parse(data[5]),
+                    Количество_в_упаковке = Int32.Parse(data[6]),
+                    Единица_измерения = Convert.ToString(data[7]),
+
+                };
+                foreach (var TypeOfMaterial in data[2].Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    var currentType = ModelEntities.GetContext().Материал.ToList().FirstOrDefault(p => p.Наименование_материала == TypeOfMaterial);
+                    if (currentType != null)
+                    {
+
                     }
                 }
-            } */
+                    try
+                    {
+                        tempMaterial.Изображение = File.ReadAllBytes(images.FirstOrDefault(p => p.Contains(tempMaterial.Наименование_материала)));
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                
 
-        /* private void ImportMaterial()
-         {
-             var fileData = File.ReadAllLines(@"C:\Users\antom\OneDrive\Рабочий стол\2024-2025\УП.01.01\Variant 1\materials_k_import.txt");
-             var images = Directory.GetFiles(@"C:\Users\antom\OneDrive\Рабочий стол\2024-2025\УП.01.01\Variant 1");
+                    ModelEntities.GetContext().Материал.Add(tempMaterial);
+                    ModelEntities.GetContext().SaveChanges();
+                }
 
-             foreach (var line in fileData)
+            }
+            */
+            /*private void ImportMaterial()
+            {
+                // Путь к папке с изображениями
+                var imagesDirectory = @"C:\Users\antom\OneDrive\Рабочий стол\2024-2025\УП.01.01\Variant 1";
+                var images = Directory.GetFiles(imagesDirectory);
+
+                // Получаем все материалы из базы данных
+                var materials = ModelEntities.GetContext().Материал.ToList();
+
+                foreach (var material in materials)
+                {
+                    // Проверяем, заполнено ли поле изображения
+                    if (material.Изображение_материала == null) // или пустая строка, если используется строковый тип
+                    {
+                        // Находим файл изображения для данного материала
+                        var imagePath = images.FirstOrDefault(img => img.Contains(material.Наименование));
+
+                        if (imagePath != null)
+                        {
+                            try
+                            {
+                                // Читаем файл изображения в байты
+                                material.Изображение_материала = File.ReadAllBytes(imagePath);
+
+                                // Сохраняем изменения в базе данных
+                                ModelEntities.GetContext().SaveChanges();
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine($"Ошибка при обработке материала {material.Наименование}: {ex.Message}");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Изображение для материала {material.Наименование} не найдено.");
+                        }
+                    }
+                } */
+
+            /* private void ImportMaterial()
              {
-                 var data = line.Split('\t');
+                 var fileData = File.ReadAllLines(@"C:\Users\antom\OneDrive\Рабочий стол\2024-2025\УП.01.01\Variant 1\materials_k_import.txt");
+                 var images = Directory.GetFiles(@"C:\Users\antom\OneDrive\Рабочий стол\2024-2025\УП.01.01\Variant 1");
 
-                 var tempMaterial = new Материал
+                 foreach (var line in fileData)
                  {
-                     ID_Поставщика = Int32.Parse(data[0]),
-                     Наименование = Convert.ToString(data[1]),
-                     Тип_материала = Convert.ToString(data[2]),
-                     Возможные_поставщики = Convert.ToString(data[3]),
-                     Количество_в_упаковке = Int32.Parse(data[4]),
-                     Единица_измерения = Convert.ToString(data[5]),
-                     Количество_на_складе = Int32.Parse(data[6]),
-                     Минимальное_допустимое_количество = Int32.Parse(data[7]),
-                     Описание = Convert.ToString(data[8]),
+                     var data = line.Split('\t');
 
-                     Стоимость_сырья = decimal.Parse(data[10]),
-                     История_изменениний = Convert.ToString(data[11]),
-
-
-
-
-
-                 };
-                 try
-                 {
-                     tempMaterial.Изображение_материала = File.ReadAllBytes(images.FirstOrDefault(p => p.Contains(tempMaterial.Наименование)));
-                 }
-                 catch (Exception ex) { Console.WriteLine(ex.Message); }
-
-                 ModelEntities.GetContext().Материал.Add(tempMaterial);
-                 ModelEntities.GetContext().SaveChanges();
-             }
-
-                 /*foreach (var TypeOfMaterial in data[2].Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries))
-                 {
-                     var currentType = ModelEntities.GetContext().Материал.ToList().FirstOrDefault(p => p.Наименование == TypeOfMaterial);
-                     if (currentType != null)
+                     var tempMaterial = new Материал
                      {
-                         tempMaterial.М.Add(currentType);
+                         ID_Поставщика = Int32.Parse(data[0]),
+                         Наименование = Convert.ToString(data[1]),
+                         Тип_материала = Convert.ToString(data[2]),
+                         Возможные_поставщики = Convert.ToString(data[3]),
+                         Количество_в_упаковке = Int32.Parse(data[4]),
+                         Единица_измерения = Convert.ToString(data[5]),
+                         Количество_на_складе = Int32.Parse(data[6]),
+                         Минимальное_допустимое_количество = Int32.Parse(data[7]),
+                         Описание = Convert.ToString(data[8]),
+
+                         Стоимость_сырья = decimal.Parse(data[10]),
+                         История_изменениний = Convert.ToString(data[11]),
+
+
+
+
+
+                     };
+                     try
+                     {
+                         tempMaterial.Изображение_материала = File.ReadAllBytes(images.FirstOrDefault(p => p.Contains(tempMaterial.Наименование)));
                      }
-                 */
+                     catch (Exception ex) { Console.WriteLine(ex.Message); }
+
+                     ModelEntities.GetContext().Материал.Add(tempMaterial);
+                     ModelEntities.GetContext().SaveChanges();
+                 }
+
+                     /*foreach (var TypeOfMaterial in data[2].Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries))
+                     {
+                         var currentType = ModelEntities.GetContext().Материал.ToList().FirstOrDefault(p => p.Наименование == TypeOfMaterial);
+                         if (currentType != null)
+                         {
+                             tempMaterial.М.Add(currentType);
+                         }
+                     */
 
 
 
+        }
     }
-    }
+
 
 

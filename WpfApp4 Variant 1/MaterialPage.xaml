@@ -32,7 +32,8 @@
             </ListView.ItemsPanel>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Grid Margin="20" Width="1200" Height="200" >
+                    <Border BorderBrush="Black" BorderThickness="1,1,1,1" >
+                    <Grid Width="1200" Height="150" >
                         <Grid.RowDefinitions>
                             <RowDefinition Height="70"></RowDefinition>
                             <RowDefinition Height="310"></RowDefinition>
@@ -40,7 +41,7 @@
                             <RowDefinition Height="auto" ></RowDefinition>
                         </Grid.RowDefinitions>
 
-                        <Image  Width="150" Height="100" Grid.Row="1" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top" StretchDirection="Both" >
+                        <Image  Width="170" Height="150"  Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top" StretchDirection="Both" Grid.RowSpan="8" Margin="10,10,10,10" >
                             <Image.Source>
                                 <Binding Path="Изображение_материала">
                                     <Binding.TargetNullValue>
@@ -49,11 +50,15 @@
                                 </Binding>
                             </Image.Source>
                         </Image>
-                        <TextBlock Text="{Binding Наименование}" VerticalAlignment="Top" TextAlignment="Center" Width="390" TextWrapping="Wrap" HorizontalAlignment="Left" Margin="5 5" FontSize="26" Grid.Row="0"></TextBlock>
-                        <TextBlock Text="{Binding Стоимость_сырья,StringFormat={}{0:N2} РУБ}" Grid.Row="2" Margin="5,5,5,15" HorizontalAlignment="Center" FontSize="26" FontWeight="Bold" ></TextBlock>
-                        <TextBlock Text="{Binding Количество_на_складе,StringFormat={}осталось: {0}}" Grid.Row="3" FontSize="14" HorizontalAlignment="Right"></TextBlock>
-                        <!--<TextBlock Text="{Binding ActualText}" Grid.Row="3" FontSize="14" HorizontalAlignment="Left"></TextBlock>-->
+                        <TextBlock Text="{Binding Тип_материала}" VerticalAlignment="Top" TextAlignment="Left" Width="390" TextWrapping="Wrap" HorizontalAlignment="Left" FontSize="20" Grid.Row="0" Margin="195,20,0,0"/>
+                            <TextBlock Text="|" Margin="280,15,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="24"></TextBlock>
+                        <TextBlock Text="{Binding Наименование_материала}" VerticalAlignment="Top" TextAlignment="Left" Width="390" TextWrapping="Wrap" HorizontalAlignment="Left" FontSize="20" Grid.Row="0" Margin="290,20,0,0"/>
+                            <TextBlock Text="{Binding Поставщики.Наименование}" VerticalAlignment="Bottom" TextAlignment="Left" Width="390" TextWrapping="Wrap" HorizontalAlignment="Right" FontSize="20" Grid.Row="0"/>
+                            <TextBlock Text="{Binding Минимальное_допустимое_количество,StringFormat={}Минимальное количество: {0}}" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" Margin="195,50,0,0"></TextBlock>
+                        <TextBlock Text="{Binding Количество_на_складе,StringFormat={}осталось: {0}}"  FontSize="18" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,20,30,0"/>
+                            <!--<TextBlock Text="{Binding ActualText}" Grid.Row="3" FontSize="14" HorizontalAlignment="Left"></TextBlock>-->
                     </Grid>
+                    </Border>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

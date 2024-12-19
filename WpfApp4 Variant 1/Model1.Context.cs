@@ -34,12 +34,9 @@ namespace WpfApp4_Variant_1
         }
     
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-        public virtual DbSet<Агенты> Агенты { get; set; }
-        public virtual DbSet<Заявка> Заявка { get; set; }
+        public virtual DbSet<Импорт_материала> Импорт_материала { get; set; }
+        public virtual DbSet<ИсторияИзмКолМатериала> ИсторияИзмКолМатериала { get; set; }
         public virtual DbSet<Материал> Материал { get; set; }
-        public virtual DbSet<Менеджеры> Менеджеры { get; set; }
         public virtual DbSet<Поставщики> Поставщики { get; set; }
-        public virtual DbSet<Продукция> Продукция { get; set; }
-        public virtual DbSet<Сотрудники> Сотрудники { get; set; }
     }
 }

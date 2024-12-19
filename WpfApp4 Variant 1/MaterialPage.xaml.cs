@@ -28,6 +28,7 @@ namespace WpfApp4_Variant_1
         {
             InitializeComponent();
             var allTypes = ModelEntities.GetContext().Материал.ToList();
+    
             CheckActual.IsChecked = true;
             ComboType.ItemsSource = allTypes;
             ComboType.SelectedIndex = 0;
@@ -40,9 +41,10 @@ namespace WpfApp4_Variant_1
         {
             
             var currentTours = ModelEntities.GetContext().Материал.ToList();
-           
-            currentTours = currentTours.Where(p => p.Наименование.ToLower().Contains(TBoxSearch.Text.ToLower())).ToList();
+            
+            currentTours = currentTours.Where(p => p.Наименование_материала.ToLower().Contains(TBoxSearch.Text.ToLower())).ToList();
             currentTours = ModelEntities.GetContext().Материал.ToList();
+    
             LViewTours.ItemsSource = currentTours.OrderBy(p => p.Количество_на_складе).ToList();
 
         }

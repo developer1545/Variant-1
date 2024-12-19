@@ -17,23 +17,20 @@ namespace WpfApp4_Variant_1
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Материал()
         {
-            this.Продукция = new HashSet<Продукция>();
+            this.ИсторияИзмКолМатериала = new HashSet<ИсторияИзмКолМатериала>();
         }
     
         public int ID_Материала { get; set; }
-        public string Наименование { get; set; }
+        public string Наименование_материала { get; set; }
         public string Тип_материала { get; set; }
-        public string Возможные_поставщики { get; set; }
+        public byte[] Изображение { get; set; }
+        public Nullable<decimal> Цена { get; set; }
+        public Nullable<int> Количество_на_складе { get; set; }
+        public Nullable<int> Минимальное_количество { get; set; }
         public Nullable<int> Количество_в_упаковке { get; set; }
         public string Единица_измерения { get; set; }
-        public Nullable<int> Количество_на_складе { get; set; }
-        public Nullable<int> Минимальное_допустимое_количество { get; set; }
-        public string Описание { get; set; }
-        public byte[] Изображение_материала { get; set; }
-        public Nullable<int> Стоимость_сырья { get; set; }
-        public string История_изменениний { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Продукция> Продукция { get; set; }
+        public virtual ICollection<ИсторияИзмКолМатериала> ИсторияИзмКолМатериала { get; set; }
     }
 }
