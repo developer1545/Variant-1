@@ -57,7 +57,7 @@
                             </StackPanel>
                             <StackPanel Grid.Column="2">
                             <TextBlock Text="{Binding Количество_на_складе,StringFormat={}осталось: {0}}"  FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                                <Button Content="Редактировать" HorizontalAlignment="Left" Background="#FF45813B" Width="50" Height=""/>
+                                <Button Content="Редактировать" HorizontalAlignment="Left" Background="#FF45813B" Width="100" Height="30" Click="ButtonRedClick"/>
                             </StackPanel>
                         </Grid>
                     </Border>

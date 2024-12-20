@@ -10,7 +10,5 @@ namespace WpfApp4_Variant_1
     internal class Manager
     {
         public static Frame MainFrame { get; set; }
-
-     
     }
 }

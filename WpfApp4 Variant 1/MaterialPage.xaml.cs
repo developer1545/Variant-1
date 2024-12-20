@@ -35,6 +35,7 @@ namespace WpfApp4_Variant_1
          
             UpdateMaterial();
             DataContext = this;
+            //Manager.MainFrame.Navigate(new RedMaterPage());
         }
       
         private void UpdateMaterial()
@@ -61,6 +62,13 @@ namespace WpfApp4_Variant_1
         private void CheckActual_Checked(object sender, RoutedEventArgs e)
         {
             UpdateMaterial();
+        }
+
+        private void ButtonRedClick(object sender, RoutedEventArgs e)
+        {
+           Window window = new MaterialRed((sender as Button).DataContext as Материал);
+           window.Show();
+          
         }
     }
 }
