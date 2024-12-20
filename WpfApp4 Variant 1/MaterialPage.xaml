@@ -43,7 +43,7 @@
 
                         <Image  Width="170" Height="150"  Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top" StretchDirection="Both" Grid.RowSpan="8" Margin="10,10,10,10" >
                             <Image.Source>
-                                <Binding Path="Изображение_материала">
+                                <Binding Path="Изображение">
                                     <Binding.TargetNullValue>
                                         <ImageSource>picture.png</ImageSource>
                                     </Binding.TargetNullValue>

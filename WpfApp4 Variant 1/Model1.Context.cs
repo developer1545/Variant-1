@@ -15,18 +15,18 @@ namespace WpfApp4_Variant_1
     
     public partial class ModelEntities : DbContext
     {
-        private static ModelEntities _DContext;
+        private static ModelEntities _context;
         public ModelEntities()
             : base("name=ModelEntities")
         {
         }
         public static ModelEntities GetContext()
         {
-            if (_DContext == null)
+            if (_context == null)
             {
-                _DContext = new ModelEntities();
+                _context = new ModelEntities();
             }
-            return _DContext;
+            return _context;
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

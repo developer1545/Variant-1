@@ -31,7 +31,7 @@ namespace WpfApp4_Variant_1
             InitializeComponent();
             MainFrame.Navigate(new MaterialPage());
             Manager.MainFrame = MainFrame;
-            //ImportMaterial();
+            ImportMaterial();
             Border.Visibility = Visibility.Hidden;
 
 
@@ -179,86 +179,51 @@ namespace WpfApp4_Variant_1
         {
             TextOut.Background = null;
         }
-        /*private void ImportMaterial()
+        private void ImportMaterial()
         {
-            var fileData = File.ReadAllLines(@"C:\Users\antom\OneDrive\Рабочий стол\2024-2025\УП.01.01\Variant 1\materials_k_import1.txt");
+            var fileData = File.ReadAllLines(@"C:\Users\antom\OneDrive\Рабочий стол\2024-2025\УП.01.01\Variant 1\materials_k_import3.txt");
             var images = Directory.GetFiles(@"C:\Users\antom\OneDrive\Рабочий стол\2024-2025\УП.01.01\Variant 1\materials");
+            var fileData2 = File.ReadAllLines(@"C:\Users\antom\OneDrive\Рабочий стол\2024-2025\УП.01.01\Variant 1\materialsupplier_k_import.txt");
 
             foreach (var line in fileData)
             {
                 var data = line.Split('\t');
-           
-                    if (data.Length < 8) // Проверка на количество данных
-                    {
-                        Console.WriteLine($"Недостаточно данных в строке: {line}");
-                        continue;
-                    }
-
-                    /*if (!Int32.TryParse(data[0], out int supplierId))
-                    {
-                        Console.WriteLine($"Ошибка парсинга  Наименование_материала в строке: {line}");
-                        continue;
-                    }
-                    
-                    if (!Int32.TryParse(data[3], out int quantityInPack))
-                    {
-                        Console.WriteLine($"Ошибка парсинга Цена в строке: {line}");
-                        continue;
-                    }
-
-                    if (!Int32.TryParse(data[4], out int quantityInStock))
-                    {
-                        Console.WriteLine($"Ошибка парсинга Количество_на_складе в строке: {line}");
-                        continue;
-                    }
-
-                    if (!Int32.TryParse(data[5], out int minQuantity))
-                    {
-                        Console.WriteLine($"Ошибка парсинга  Минимальное_количество: {line}");
-                        continue;
-                    }
-
-                    if (!decimal.TryParse(data[6], out decimal rawMaterialCost))
-                    {
-                        Console.WriteLine($"Ошибка парсинга Количество_в_упаковке: {line}");
-                        continue;
-                    }
-
-                    var tempMaterial = new Материал
+                var tempMaterial = new Материал
                 {
-                    Наименование_материала = data[0].Replace("\"",""),
+                    Наименование_материала = data[0],
                     Тип_материала = Convert.ToString(data[1]),
                     Цена = Int32.Parse(data[3]),
                     Количество_на_складе = Int32.Parse(data[4]),
                     Минимальное_количество = Int32.Parse(data[5]),
                     Количество_в_упаковке = Int32.Parse(data[6]),
-                    Единица_измерения = Convert.ToString(data[7]),
-
+                    Единица_измерения = data[7]
                 };
-                foreach (var TypeOfMaterial in data[2].Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries))
+                foreach (var line2 in fileData2)
                 {
-                    var currentType = ModelEntities.GetContext().Материал.ToList().FirstOrDefault(p => p.Наименование_материала == TypeOfMaterial);
-                    if (currentType != null)
+                    var Data2 = line2.Split('\t');
+                    if (Data2[0] == data[0])
                     {
-
+                        var suppliers = ModelEntities.GetContext().Поставщики.ToList().FirstOrDefault(p => p.Наименование_поставщика == Data2[1]); 
+                        if (suppliers != null)
+                        {
+                            tempMaterial.Поставщики.Add(suppliers);
+                        }
                     }
                 }
-                    try
-                    {
-                        tempMaterial.Изображение = File.ReadAllBytes(images.FirstOrDefault(p => p.Contains(tempMaterial.Наименование_материала)));
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
-                
-
-                    ModelEntities.GetContext().Материал.Add(tempMaterial);
-                    ModelEntities.GetContext().SaveChanges();
+                try
+                {
+                    tempMaterial.Изображение = File.ReadAllBytes(images.FirstOrDefault(p => p.Contains(data[2])));
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
                 }
 
+                ModelEntities.GetContext().Материал.Add(tempMaterial);
+                ModelEntities.GetContext().SaveChanges();
             }
-            */
+        }
+            
             /*private void ImportMaterial()
             {
                 // Путь к папке с изображениями

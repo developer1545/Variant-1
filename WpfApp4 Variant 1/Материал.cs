@@ -18,6 +18,7 @@ namespace WpfApp4_Variant_1
         public Материал()
         {
             this.ИсторияИзмКолМатериала = new HashSet<ИсторияИзмКолМатериала>();
+            this.Поставщики = new HashSet<Поставщики>();
         }
     
         public int ID_Материала { get; set; }
@@ -32,5 +33,7 @@ namespace WpfApp4_Variant_1
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ИсторияИзмКолМатериала> ИсторияИзмКолМатериала { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Поставщики> Поставщики { get; set; }
     }
 }
