@@ -31,7 +31,7 @@ namespace WpfApp4_Variant_1
             InitializeComponent();
             MainFrame.Navigate(new MaterialPage());
             Manager.MainFrame = MainFrame;
-            ImportMaterial();
+            //ImportMaterial();
             Border.Visibility = Visibility.Hidden;
 
 

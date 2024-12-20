@@ -23,7 +23,7 @@ namespace WpfApp4_Variant_1
     /// </summary>
     public partial class MaterialPage : Page
     {
-        public ObservableCollection<String> Images { get; set; }
+        public ObservableCollection<BitmapImage> Images { get; set; }
         public MaterialPage()
         {
             InitializeComponent();

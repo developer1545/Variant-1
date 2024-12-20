@@ -11,7 +11,8 @@ namespace WpfApp4_Variant_1
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Linq;
+
     public partial class Материал
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -35,5 +36,6 @@ namespace WpfApp4_Variant_1
         public virtual ICollection<ИсторияИзмКолМатериала> ИсторияИзмКолМатериала { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Поставщики> Поставщики { get; set; }
+        public string ВсеПоставщики => string.Join(", ", Поставщики.Select(p => p.Наименование_поставщика).Where(n => !string.IsNullOrEmpty(n)).DefaultIfEmpty("Не указано")); 
     }
 }
